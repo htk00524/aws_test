@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>간단한 웹사이트 — My Mini Site</title>
+  <style>
+    :root{--accent:#4f46e5;--muted:#6b7280;--bg:#f8fafc}
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial}
+    body{background:linear-gradient(180deg,#ffffff 0%,var(--bg) 100%);color:#0f172a;display:flex;flex-direction:column}
+    .container{max-width:960px;margin:32px auto;padding:24px}
+    header{display:flex;align-items:center;justify-content:space-between}
+    .logo{display:flex;gap:12px;align-items:center}
+    .logo .dot{width:36px;height:36px;border-radius:8px;background:var(--accent);display:inline-block}
+    nav a{margin-left:14px;color:var(--muted);text-decoration:none}
+    .hero{margin-top:28px;background:#fff;border-radius:12px;padding:28px;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+    .hero h1{margin:0 0 8px;font-size:28px}
+    .hero p{margin:0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:20px}
+    .card{background:#fff;padding:18px;border-radius:10px;box-shadow:0 3px 10px rgba(2,6,23,0.04)}
+    .btn{display:inline-block;padding:10px 16px;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none}
+    footer{margin-top:30px;padding:18px 0;color:var(--muted);font-size:14px;text-align:center}
+    form{display:flex;flex-direction:column;gap:8px}
+    input,textarea{padding:10px;border-radius:8px;border:1px solid #e6e9ef;font-size:14px}
+    @media (max-width:520px){.container{margin:16px;padding:16px}.hero h1{font-size:22px}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <span class="dot" aria-hidden></span>
+        <div>
+          <div style="font-weight:700">My Mini Site</div>
+          <div style="font-size:12px;color:var(--muted)">작고 빠른 웹 페이지 예제</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#features">기능</a>
+        <a href="#about">소개</a>
+        <a href="#contact">문의</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>간단하고 깔끔한 HTML 템플릿</h1>
+      <p>이 페이지는 반응형이며, 설명 카드, 연락처 폼, 간단한 상호작용을 포함합니다. 원하는대로 수정하세요.</p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>빠른 시작</h3>
+          <p style="color:var(--muted)">이 파일을 저장하고 브라우저로 열면 바로 확인할 수 있습니다.</p>
+          <p><a class="btn" href="#contact" onclick="scrollToContact(event)">문의하기</a></p>
+        </div>
+        <div class="card">
+          <h3>반응형</h3>
+          <p style="color:var(--muted)">모바일과 데스크탑에서 모두 보기 좋게 동작합니다.</p>
+        </div>
+        <div class="card">
+          <h3>간단한 스크립트</h3>
+          <p style="color:var(--muted)">자바스크립트로 폼 제출을 처리합니다 (페이지 새로고침 없이).</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" style="margin-top:20px">
+      <h2>특징</h2>
+      <ul style="color:var(--muted)">
+        <li>정적 HTML + CSS (외부 라이브러리 불필요)</li>
+        <li>접근성 고려: 명확한 버튼과 폼 라벨</li>
+        <li>간단한 클라이언트 측 폼 처리</li>
+      </ul>
+    </section>
+
+    <section id="about" style="margin-top:18px">
+      <h2>소개</h2>
+      <p style="color:var(--muted)">이 템플릿은 과제, 포트폴리오, 랜딩 페이지 등 간단한 목적에 적합합니다. 필요하면 섹션을 추가하거나 디자인을 바꿔드릴게요.</p>
+    </section>
+
+    <section id="contact" style="margin-top:18px">
+      <h2>문의하기</h2>
+      <form id="contactForm" onsubmit="handleSubmit(event)">
+        <label for="name">이름</label>
+        <input id="name" name="name" required placeholder="홍길동" />
+
+        <label for="email">이메일</label>
+        <input id="email" name="email" type="email" required placeholder="you@example.com" />
+
+        <label for="message">메시지</label>
+        <textarea id="message" name="message" rows="4" required placeholder="문의 내용을 적어주세요"></textarea>
+
+        <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+          <button class="btn" type="submit">보내기</button>
+          <span id="status" style="color:var(--muted);font-size:13px"></span>
+        </div>
+      </form>
+    </section>
+
+    <footer>
+      © <span id="year"></span> My Mini Site · 만들어진 예시 페이지
+    </footer>
+  </div>
+
+  <script>
+    // 현재 연도 설정
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function scrollToContact(e){
+      e.preventDefault();
+      document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+    }
+
+    function handleSubmit(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const status = document.getElementById('status');
+
+      // 간단한 유효성
+      if(!name || !email || !message){
+        status.textContent = '모든 항목을 작성해 주세요.';
+        return;
+      }
+
+      // 시뮬레이션: 실제 전송 대신 잠깐 메시지 표시
+      status.textContent = '전송 중...';
+      setTimeout(()=>{
+        status.textContent = '메시지가 전송되었습니다. 감사합니다!';
+        document.getElementById('contactForm').reset();
+      },800);
+    }
+  </script>
+</body>
+</html>
